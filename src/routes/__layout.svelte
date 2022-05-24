@@ -2,11 +2,11 @@
 	import '../app.css';
 </script>
 
-<div>
-	<header class="sticky top-0 px-5 py-7 shadow-md">
+<div class="prose max-w-none">
+	<header class="sticky bg-white top-0 px-5 py-7 shadow-md">
 		<div class="flex justify-between items-center">
-			<h2 class="font-bold">Where in the world?</h2>
-			<button>Dark Mode</button>
+			<h4 class="font-bold my-0">Where in the world?</h4>
+			<button class="text-sm">Dark Mode</button>
 		</div>
 	</header>
 	<slot />

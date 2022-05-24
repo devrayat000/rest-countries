@@ -53,10 +53,10 @@ export interface CoatOfArms {
 }
 
 export interface Currencies {
-	BDT: Bdt;
+	[key: string]: Currency;
 }
 
-export interface Bdt {
+export interface Currency {
 	name: string;
 	symbol: string;
 }
@@ -81,7 +81,7 @@ export interface Idd {
 }
 
 export interface Languages {
-	ben: string;
+	[key: string]: string;
 }
 
 export interface Maps {
