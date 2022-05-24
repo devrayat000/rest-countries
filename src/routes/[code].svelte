@@ -2,7 +2,7 @@
 	import type { Load } from '@sveltejs/kit';
 	import type { Country } from '../lib/interfaces/country';
 
-	export const prerender = true;
+	export const prerender = false;
 
 	export const load: Load = async ({ fetch, params }) => {
 		console.log('id:', params['code']);
