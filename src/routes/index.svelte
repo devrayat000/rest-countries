@@ -4,7 +4,7 @@
 
 	export const prerender = true;
 
-	export const load: Load = async ({ fetch, session }) => {
+	export const load: Load = async ({ fetch }) => {
 		const res = await fetch(
 			'https://restcountries.com/v3.1/all?fields=name,cca3,flags,population,region,capital'
 		);
@@ -32,18 +32,23 @@
 		<Region />
 	</div>
 	<section class="p-8 flex flex-col gap-7">
-		{#each countries as country (country.name.official)}
+		{#each countries as country (country?.name?.official)}
 			<a
-				href={`/${country.cca3.toLowerCase()}`}
+				sveltekit:prefetch
+				href={`/${country?.cca3?.toLowerCase()}`}
 				class="shadow-md rounded-md bg-white overflow-hidden no-underline"
 			>
-				<img class="my-0" src={country.flags.png} alt={country.name.official} />
+				{#if country?.flags}
+					<img class="my-0" src={country?.flags?.png} alt={country?.name?.official} />
+				{/if}
 				<div class="p-6 pb-8">
-					<h3 class="my-0 mb-4">{country.name.official}</h3>
-					<Info label="Population" value={country.population.toLocaleString()} />
-					<Info label="Region" value={country.region} />
-					{#if country.capital}
-						<Info label="Capital" value={country.capital[0]} />
+					{#if country?.name}
+						<h3 class="my-0 mb-4">{country?.name?.official}</h3>
+					{/if}
+					<Info label="Population" value={country?.population?.toLocaleString()} />
+					<Info label="Region" value={country?.region} />
+					{#if country?.capital}
+						<Info label="Capital" value={country?.capital[0]} />
 					{/if}
 				</div>
 			</a>
