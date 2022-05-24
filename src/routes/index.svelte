@@ -6,7 +6,7 @@
 
 	export const load: Load = async ({ fetch }) => {
 		const res = await fetch(
-			'https://restcountries.com/v3.1/all?fields=name,cca3,flags,population,region,capital'
+			'https://restcountries.com/v3.1/all?fields=name,ccn3,flags,population,region,capital'
 		);
 		const countries = await res.json();
 
@@ -32,10 +32,10 @@
 		<Region />
 	</div>
 	<section class="p-8 flex flex-col gap-7">
-		{#each countries as country (country?.name?.official)}
+		{#each countries as country (country?.ccn3)}
 			<a
 				sveltekit:prefetch
-				href={`/${country?.cca3?.toLowerCase()}`}
+				href={`/${country?.ccn3}`}
 				class="shadow-md rounded-md bg-white overflow-hidden no-underline"
 			>
 				{#if country?.flags}
@@ -47,9 +47,7 @@
 					{/if}
 					<Info label="Population" value={country?.population?.toLocaleString()} />
 					<Info label="Region" value={country?.region} />
-					{#if country?.capital}
-						<Info label="Capital" value={country?.capital[0]} />
-					{/if}
+					<Info label="Capital" value={country?.capital?.at(0)} />
 				</div>
 			</a>
 		{/each}
