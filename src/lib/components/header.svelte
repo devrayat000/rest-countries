@@ -2,11 +2,12 @@
 	import { MoonIcon } from '@rgossiaux/svelte-heroicons/outline';
 </script>
 
-<header class="sticky bg-white top-0 px-5 py-7 shadow-md">
-	<div class="flex justify-between items-center">
-		<h4 class="font-bold my-0">Where in the world?</h4>
-		<button type="button" class="text-sm font-semibold">
-			<MoonIcon class="h-5 w-5 inline mr-1" /> Dark Mode
+<header class="sticky z-50 bg-light-card dark:bg-dark-card top-0 px-5 py-7 shadow-md">
+	<div class="flex justify-between items-center text-light-text dark:text-dark-text">
+		<a href="/" class="no-underline font-bold my-0 text-inherit">Where in the world?</a>
+		<button type="button" class="text-sm font-semibold flex gap-1 items-center">
+			<MoonIcon class="h-4 w-4 inline mr-1" />
+			<span>Dark Mode</span>
 		</button>
 	</div>
 </header>
