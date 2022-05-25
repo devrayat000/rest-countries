@@ -1,4 +1,4 @@
-import type { Currencies, Languages } from '$lib/interfaces/country';
+import type { Currencies, Languages, NativeName } from '$lib/interfaces/country';
 
 export function extractCurrencies(currencies: Currencies) {
 	return mapToArray(currencies, (item) => item.name);
@@ -6,6 +6,10 @@ export function extractCurrencies(currencies: Currencies) {
 
 export function extractLanguages(languages: Languages) {
 	return mapToArray(languages, (item) => item);
+}
+
+export function extractNativeName(nativeName: NativeName) {
+	return mapToArray(nativeName, (item) => item.common);
 }
 
 export function mapToArray<T, R>(

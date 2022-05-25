@@ -96,7 +96,7 @@ export interface Name {
 }
 
 export interface NativeName {
-	ben: Translation;
+	[key: string]: Translation;
 }
 
 export interface Translation {

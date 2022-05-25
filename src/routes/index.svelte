@@ -27,11 +27,11 @@
 </script>
 
 <main class="p-5 bg-gray-50">
-	<div class="flex flex-col justify-between md:flex-row gap-8">
+	<div class="flex flex-col md:flex-row justify-between gap-8">
 		<Search />
 		<Region />
 	</div>
-	<section class="p-8 flex flex-col gap-7">
+	<section class="p-8 flex flex-col md:flex-row flex-wrap gap-7 md:gap-10">
 		{#each countries as country (country?.ccn3)}
 			<a
 				sveltekit:prefetch
@@ -43,7 +43,7 @@
 				{/if}
 				<div class="p-6 pb-8">
 					{#if country?.name}
-						<h3 class="my-0 mb-4">{country?.name?.official}</h3>
+						<h3 class="my-0 mb-4 font-extrabold">{country?.name?.official}</h3>
 					{/if}
 					<Info label="Population" value={country?.population?.toLocaleString()} />
 					<Info label="Region" value={country?.region} />
