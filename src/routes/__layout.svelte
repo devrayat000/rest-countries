@@ -15,7 +15,7 @@
 	setContext('history', history);
 </script>
 
-<div class="prose max-w-none">
+<div class="prose max-w-none bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text">
 	<Header />
 	<slot />
 </div>

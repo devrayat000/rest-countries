@@ -2,7 +2,7 @@
 	import type { Load } from '@sveltejs/kit';
 	import type { Country } from '../lib/interfaces/country';
 
-	export const prerender = true;
+	export const prerender = false;
 
 	export const load: Load = async ({ fetch, params }) => {
 		console.log('id:', params['code']);
@@ -13,17 +13,14 @@
 
 		const country = (await res.json())[0] as Country;
 
-		const borderCountryArray = country?.borders?.reduce<Promise<Country[]>>(
-			async (prev, border) => {
-				const res = await fetch(
-					`https://restcountries.com/v3.1/alpha/?codes=${border}&fields=name,ccn3`
-				);
-				const countries = (await res.json()) as Country[];
+		const borderCountryArray = country.borders.reduce<Promise<Country[]>>(async (prev, border) => {
+			const res = await fetch(
+				`https://restcountries.com/v3.1/alpha/?codes=${border}&fields=name,ccn3`
+			);
+			const countries = (await res.json()) as Country[];
 
-				return [...(await prev), ...countries];
-			},
-			Promise.resolve([])
-		);
+			return [...(await prev), ...countries];
+		}, Promise.resolve([]));
 
 		return {
 			props: {
@@ -81,12 +78,12 @@
 	<meta name="twitter:image:alt" content="Whole World Preview" />
 </svelte:head>
 
-<main class="bg-gray-50 p-6 md:p-12">
+<main class="p-6 md:p-12">
 	<div>
 		<button
 			on:click={goBack}
 			type="button"
-			class="text-center no-underline bg-white text-xs px-6 py-1.5 shadow-md flex gap-2 items-center"
+			class="text-center no-underline bg-light-card dark:bg-dark-card text-xs px-6 py-1.5 shadow-md flex gap-2 items-center"
 		>
 			<ArrowLeftIcon class="h-3 w-3" />
 			<span>Back</span>
@@ -95,40 +92,40 @@
 	<br class="h-14" />
 	<div class="flex flex-col md:flex-row justify-between md:gap-12">
 		<section class="md:flex-1">
-			<img class="m-0 w-full h-full" src={country?.flags?.png} alt={country?.name?.official} />
+			<img class="m-0 w-full h-full" src={country.flags.png} alt={country.name.official} />
 		</section>
 		<article class="md:flex-1 my-6">
-			<h2 class="font-extrabold my-0">{country?.name?.official}</h2>
+			<h2 class="text-inherit font-extrabold my-0">{country.name.official}</h2>
 			<br class="h-5" />
-			<div class="flex flex-col md:flex-row md:gap-7">
+			<div class="flex flex-col md:flex-row gap-7">
 				<section>
-					<Info label="Native Name" value={extractNativeName(country?.name?.nativeName)?.at(0)} />
-					<Info label="Population" value={country?.population?.toLocaleString()} />
-					<Info label="Region" value={country?.region} />
-					<Info label="Sub Region" value={country?.subregion} />
-					<Info label="Capital" value={country?.capital?.at(0)} />
+					<Info label="Native Name" value={extractNativeName(country.name.nativeName).at(0)} />
+					<Info label="Population" value={country.population.toLocaleString()} />
+					<Info label="Region" value={country.region} />
+					<Info label="Sub Region" value={country.subregion} />
+					<Info label="Capital" value={country.capital.at(0)} />
 				</section>
 				<section>
-					<Info label="Top Level Domain" value={country?.tld?.at(0)} />
+					<Info label="Top Level Domain" value={country.tld.at(0)} />
 					<Info
 						label="Currencies"
-						value={country?.currencies && extractCurrencies(country?.currencies).join(', ')}
+						value={country.currencies && extractCurrencies(country.currencies).join(', ')}
 					/>
 					<Info
 						label="Languages"
-						value={country?.languages && extractLanguages(country?.languages).join(', ')}
+						value={country.languages && extractLanguages(country.languages).join(', ')}
 					/>
 				</section>
 			</div>
 			<br class="h-7" />
-			<h4 class="font-extrabold mt-0">Border Countries:</h4>
+			<h4 class="text-inherit font-extrabold mt-0">Border Countries:</h4>
 			<section class="flex gap-3 flex-wrap">
-				{#each borderCountries as border (border?.ccn3)}
+				{#each borderCountries as border (border.ccn3)}
 					<a
-						href={`/${border?.ccn3}`}
-						class="text-center no-underline bg-white text-xs px-6 py-1 shadow-md"
+						href={`/${border.ccn3}`}
+						class="text-center text-inherit no-underline bg-light-card dark:bg-dark-card text-xs px-6 py-1 shadow-md"
 					>
-						{border?.name?.common}
+						{border.name.common}
 					</a>
 				{/each}
 			</section>

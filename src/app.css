@@ -2,3 +2,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html, body {
+        @apply bg-light-bg dark:bg-dark-bg;
+    }
+    
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+}

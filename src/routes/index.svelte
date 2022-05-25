@@ -19,7 +19,7 @@
 </script>
 
 <script lang="ts">
-	import Info from '$lib/components/info.svelte';
+	import CountryCard from '$lib/components/country-card.svelte';
 	import Region from '$lib/components/region.svelte';
 	import Search from '$lib/components/search.svelte';
 
@@ -55,7 +55,7 @@
 	<meta name="twitter:image:alt" content="Whole World Preview" />
 </svelte:head>
 
-<main class="p-5 md:p-10 bg-light-bg dark:bg-dark-bg">
+<main class="p-5 md:p-10">
 	<div class="flex flex-col md:flex-row justify-between gap-8">
 		<Search />
 		<Region />
@@ -63,24 +63,8 @@
 	<section
 		class="p-8 md:px-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 md:gap-10"
 	>
-		{#each countries as country (country?.ccn3)}
-			<a
-				href={`/${country?.ccn3}`}
-				title={country?.name?.official}
-				class="shadow-md rounded-md bg-light-card dark:bg-dark-card overflow-hidden no-underline"
-			>
-				{#if country?.flags}
-					<img class="my-0 h-52 w-full" src={country?.flags?.png} alt={country?.name?.official} />
-				{/if}
-				<div class="p-6 pb-8">
-					{#if country?.name}
-						<h3 class="my-0 mb-4 font-extrabold truncate">{country?.name?.official}</h3>
-					{/if}
-					<Info label="Population" value={country?.population?.toLocaleString()} />
-					<Info label="Region" value={country?.region} />
-					<Info label="Capital" value={country?.capital?.at(0)} />
-				</div>
-			</a>
+		{#each countries as country (country.ccn3)}
+			<CountryCard {country} />
 		{/each}
 	</section>
 </main>
