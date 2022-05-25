@@ -1,8 +1,11 @@
 <script lang="ts">
+	// import { page, } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@rgossiaux/svelte-headlessui';
 	import { ChevronDownIcon } from '@rgossiaux/svelte-heroicons/solid';
 
 	import { regions } from '$lib/utils/constants';
+	import { page } from '$app/stores';
 </script>
 
 <section class="text-left">
@@ -28,22 +31,20 @@
 			leaveTo="transform opacity-0 scale-95"
 		>
 			<MenuItems
-				class="absolute left-0 mt-2 w-56 origin-top-left rounded-md bg-light-card dark:bg-dark-card shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+				class="absolute left-0 md:right-0 md:left-auto mt-2 w-56 origin-top-left rounded-md bg-light-card dark:bg-dark-card shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
 			>
 				<div class="px-1 py-1 ">
 					{#each regions as region (region)}
 						<MenuItem
-							href={`/region/${region.toLowerCase()}`}
-							class="no-underline text-inherit"
-							let:active
+							selected={$page.url.searchParams.get('r') === region.toLowerCase()}
+							as="a"
+							href="/?r={region.toLowerCase()}"
+							class={({ active }) =>
+								`${
+									active && 'bg-light-bg dark:bg-dark-bg'
+								} no-underline text-inherit group flex w-full items-center rounded-md px-2 py-2 text-sm`}
 						>
-							<button
-								class={`${
-									active && 'bg-gray-100'
-								} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-							>
-								{region}
-							</button>
+							{region}
 						</MenuItem>
 					{/each}
 				</div>

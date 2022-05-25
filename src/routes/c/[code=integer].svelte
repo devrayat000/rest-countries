@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
-	import type { Country } from '../lib/interfaces/country';
+	import type { Country } from '$lib/interfaces/country';
 
 	export const prerender = false;
 

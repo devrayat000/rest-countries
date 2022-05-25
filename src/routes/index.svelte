@@ -1,13 +1,23 @@
 <script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
+
 	import type { Country } from '../lib/interfaces/country';
+	import { getAllCountries, getCountriesByRegion } from '$lib/services/country-list';
 
-	export const prerender = true;
+	export const prerender = false;
 
-	export const load: Load = async ({ fetch }) => {
-		const res = await fetch(
-			'https://restcountries.com/v3.1/all?fields=name,ccn3,flags,population,region,capital'
-		);
+	export const load: Load = async ({ fetch, url }) => {
+		const region = url.searchParams.get('r');
+		let res: Response;
+
+		if (region) {
+			const a = getCountriesByRegion(region).toString();
+			console.log(a);
+
+			res = await fetch(a);
+		} else {
+			res = await fetch(getAllCountries().toString());
+		}
 		const countries = await res.json();
 
 		return {

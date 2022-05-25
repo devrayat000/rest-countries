@@ -6,7 +6,7 @@
 </script>
 
 <a
-	href={`/${country.ccn3}`}
+	href="/c/{country.ccn3}"
 	title={country.name.official}
 	class="shadow-md rounded-md text-inherit bg-light-card dark:bg-dark-card overflow-hidden no-underline"
 >
