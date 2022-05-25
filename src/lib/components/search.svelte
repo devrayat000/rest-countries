@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	import { SearchIcon } from '@rgossiaux/svelte-heroicons/solid';
 
-	let input: string;
+	let input = $page.url.searchParams.get('s') ?? '';
 
 	function searchCountry(e: SubmitEvent) {
 		e.preventDefault();

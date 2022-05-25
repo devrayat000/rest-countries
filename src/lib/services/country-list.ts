@@ -1,5 +1,5 @@
 function getCountryListUrl(endpoint: string) {
-	const url = new URL(`/v3.1${endpoint}`, 'https://restcountries.com/v3.1/');
+	const url = new URL(`/v3.1${endpoint}`, 'https://restcountries.com/');
 	url.searchParams.set('fields', 'name,ccn3,flags,population,region,capital');
 	return url;
 }

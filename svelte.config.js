@@ -15,6 +15,12 @@ const config = {
 		adapter: adapter(),
 		browser: {
 			router: false
+		},
+		prerender: {
+			concurrency: 3,
+			enabled: true,
+			onError: console.log,
+			entries: ['/sitemap.xml']
 		}
 	}
 };
