@@ -11,3 +11,7 @@ export function getAllCountries() {
 export function getCountriesByRegion(region: string) {
 	return getCountryListUrl(`/region/${region}`);
 }
+
+export function getCountriesByName(name: string) {
+	return getCountryListUrl(`/name/${name}`);
+}

@@ -60,13 +60,13 @@
 	<meta name="robots" content="index,nofollow" />
 	<!-- Open Graph -->
 	<meta property="og:title" content={country.name.official} />
-	<meta property="og:url" content="https://every-country.netlify.app/{country.ccn3}" />
+	<meta property="og:url" content="https://every-country.netlify.app/c/{country.ccn3}" />
 	<meta property="og:type" content="website" />
 	<meta
 		property="og:description"
 		content="Shorten your links in a blink! Free URL shortener to create perfect URLs for your business"
 	/>
-	<meta property="og:image" content="/demo/desktop-preview.jpg" />
+	<meta property="og:image" content={country.flags.png} />
 	<meta property="og:image:alt" content="Whole World Preview" />
 	<!-- Twitter -->
 	<meta name="twitter:title" content={country.name.official} />
@@ -74,7 +74,7 @@
 		name="twitter:description"
 		content="Shorten your links in a blink! Free URL shortener to create perfect URLs for your business"
 	/>
-	<meta name="twitter:image" content="/demo/desktop-preview.jpg" />
+	<meta name="twitter:image" content={country.flags.png} />
 	<meta name="twitter:image:alt" content="Whole World Preview" />
 </svelte:head>
 

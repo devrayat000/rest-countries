@@ -1,10 +1,20 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	import { SearchIcon } from '@rgossiaux/svelte-heroicons/solid';
 
 	let input: string;
+
+	function searchCountry(e: SubmitEvent) {
+		e.preventDefault();
+		return goto(`/?s=${input}`);
+	}
 </script>
 
-<form class="rounded-md shadow-md py-2 px-7 bg-light-card dark:bg-dark-card flex items-center">
+<form
+	on:submit={searchCountry}
+	class="rounded-md shadow-md py-2 px-7 bg-light-card dark:bg-dark-card flex items-center"
+>
 	<SearchIcon class="h-6 w-6 text-inherit" />
 	<input
 		type="search"

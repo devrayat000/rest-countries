@@ -1,6 +1,4 @@
 <script lang="ts">
-	// import { page, } from '$app/stores';
-	import { goto } from '$app/navigation';
 	import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@rgossiaux/svelte-headlessui';
 	import { ChevronDownIcon } from '@rgossiaux/svelte-heroicons/solid';
 
@@ -12,9 +10,9 @@
 	<Menu as="div" class="relative inline-block text-left" let:open>
 		<div>
 			<MenuButton
-				class="inline-flex w-full justify-center shadow-md rounded-md bg-light-card dark:bg-dark-card px-6 py-4 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+				class="inline-flex items-center gap-4 w-full justify-center shadow-md rounded-md bg-light-card dark:bg-dark-card px-6 py-4 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
 			>
-				Find by Region
+				<span>Find by Region</span>
 				<ChevronDownIcon
 					class={`ml-2 -mr-1 h-5 w-5 transition-transform ${open && 'rotate-180'}`}
 					aria-hidden="true"

@@ -2,19 +2,23 @@
 	import type { Load } from '@sveltejs/kit';
 
 	import type { Country } from '../lib/interfaces/country';
-	import { getAllCountries, getCountriesByRegion } from '$lib/services/country-list';
+	import {
+		getAllCountries,
+		getCountriesByName,
+		getCountriesByRegion
+	} from '$lib/services/country-list';
 
 	export const prerender = false;
 
 	export const load: Load = async ({ fetch, url }) => {
 		const region = url.searchParams.get('r');
+		const search = url.searchParams.get('s');
 		let res: Response;
 
 		if (region) {
-			const a = getCountriesByRegion(region).toString();
-			console.log(a);
-
-			res = await fetch(a);
+			res = await fetch(getCountriesByRegion(region).toString());
+		} else if (search) {
+			res = await fetch(getCountriesByName(search).toString());
 		} else {
 			res = await fetch(getAllCountries().toString());
 		}
