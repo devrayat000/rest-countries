@@ -19,6 +19,6 @@
 		{/if}
 		<Info label="Population" value={country.population.toLocaleString()} />
 		<Info label="Region" value={country.region} />
-		<Info label="Capital" value={country.capital.at(0)} />
+		<Info label="Capital" value={country.capital[0]} />
 	</div>
 </a>

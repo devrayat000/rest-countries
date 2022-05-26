@@ -45,7 +45,7 @@
 
 	function goBack() {
 		$history.pop();
-		return goto($history.at($history.length - 1)!, { replaceState: true });
+		return goto($history[$history.length - 1]!, { replaceState: true });
 	}
 </script>
 
@@ -99,14 +99,14 @@
 			<br class="h-5" />
 			<div class="flex flex-col md:flex-row gap-7">
 				<section>
-					<Info label="Native Name" value={extractNativeName(country.name.nativeName).at(0)} />
+					<Info label="Native Name" value={extractNativeName(country.name.nativeName)[0]} />
 					<Info label="Population" value={country.population.toLocaleString()} />
 					<Info label="Region" value={country.region} />
 					<Info label="Sub Region" value={country.subregion} />
-					<Info label="Capital" value={country.capital.at(0)} />
+					<Info label="Capital" value={country.capital[0]} />
 				</section>
 				<section>
-					<Info label="Top Level Domain" value={country.tld.at(0)} />
+					<Info label="Top Level Domain" value={country.tld[0]} />
 					<Info
 						label="Currencies"
 						value={country.currencies && extractCurrencies(country.currencies).join(', ')}
