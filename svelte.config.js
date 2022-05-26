@@ -20,7 +20,7 @@ const config = {
 			concurrency: 3,
 			enabled: true,
 			onError: console.log,
-			entries: ['*']
+			entries: ['/sitemap.xml']
 		}
 	}
 };
