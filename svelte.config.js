@@ -13,9 +13,9 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
-		browser: {
-			router: false
-		},
+		// browser: {
+		// 	router: false
+		// },
 		prerender: {
 			concurrency: 3,
 			enabled: true,

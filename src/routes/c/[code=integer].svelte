@@ -52,33 +52,33 @@
 <svelte:head>
 	<title>{country.name.official}</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<meta
+	<!-- <meta
 		name="description"
 		content="Shorten your links in a blink! Free URL shortener to create perfect URLs for your business"
-	/>
+	/> -->
 	<meta name="keywords" content="country,rest,travel,info,informative" />
 	<meta name="robots" content="index,nofollow" />
 	<!-- Open Graph -->
 	<meta property="og:title" content={country.name.official} />
 	<meta property="og:url" content="https://every-country.netlify.app/c/{country.ccn3}" />
 	<meta property="og:type" content="website" />
-	<meta
+	<!-- <meta
 		property="og:description"
 		content="Shorten your links in a blink! Free URL shortener to create perfect URLs for your business"
-	/>
+	/> -->
 	<meta property="og:image" content={country.flags.png} />
-	<meta property="og:image:alt" content="Whole World Preview" />
+	<meta property="og:image:alt" content="Flag - {country.name.official}" />
 	<!-- Twitter -->
 	<meta name="twitter:title" content={country.name.official} />
-	<meta
+	<!-- <meta
 		name="twitter:description"
 		content="Shorten your links in a blink! Free URL shortener to create perfect URLs for your business"
-	/>
+	/> -->
 	<meta name="twitter:image" content={country.flags.png} />
-	<meta name="twitter:image:alt" content="Whole World Preview" />
+	<meta name="twitter:image:alt" content="Flag - {country.name.official}" />
 </svelte:head>
 
-<main class="p-6 md:p-12">
+<main class="p-6 md:p-12 min-h-screen">
 	<div>
 		<button
 			on:click={goBack}
@@ -122,7 +122,7 @@
 			<section class="flex gap-3 flex-wrap">
 				{#each borderCountries as border (border.ccn3)}
 					<a
-						href={`/${border.ccn3}`}
+						href={`/c/${border.ccn3}`}
 						class="text-center text-inherit no-underline bg-light-card dark:bg-dark-card text-xs px-6 py-1 shadow-md"
 					>
 						{border.name.common}

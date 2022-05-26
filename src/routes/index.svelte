@@ -43,28 +43,19 @@
 <svelte:head>
 	<title>Whole World - Informative International App</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<meta
-		name="description"
-		content="Shorten your links in a blink! Free URL shortener to create perfect URLs for your business"
-	/>
+	<meta name="description" content="Get infromation about any country in the world." />
 	<meta name="keywords" content="country,rest,travel,info,informative" />
 	<meta name="robots" content="index,nofollow" />
 	<!-- Open Graph -->
 	<meta property="og:title" content="Whole World - Informative International App" />
 	<meta property="og:url" content="https://every-country.netlify.app/" />
 	<meta property="og:type" content="website" />
-	<meta
-		property="og:description"
-		content="Shorten your links in a blink! Free URL shortener to create perfect URLs for your business"
-	/>
+	<meta property="og:description" content="Get infromation about any country in the world." />
 	<meta property="og:image" content="/demo/desktop-preview.jpg" />
 	<meta property="og:image:alt" content="Whole World Preview" />
 	<!-- Twitter -->
 	<meta name="twitter:title" content="Whole World - Informative International App" />
-	<meta
-		name="twitter:description"
-		content="Shorten your links in a blink! Free URL shortener to create perfect URLs for your business"
-	/>
+	<meta name="twitter:description" content="Get infromation about any country in the world." />
 	<meta name="twitter:image" content="/demo/desktop-preview.jpg" />
 	<meta name="twitter:image:alt" content="Whole World Preview" />
 </svelte:head>

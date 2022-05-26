@@ -4,11 +4,12 @@
 @tailwind utilities;
 
 @layer base {
-    html, body {
+    :global(html, body) {
         @apply bg-light-bg dark:bg-dark-bg;
     }
     
-    * {
+    :global(*) {
         -webkit-tap-highlight-color: transparent;
+        @apply transition-colors;
     }
 }
