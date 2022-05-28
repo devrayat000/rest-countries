@@ -60,7 +60,7 @@
 	<meta name="twitter:image:alt" content="Whole World Preview" />
 </svelte:head>
 
-<main class="p-5 md:p-10">
+<main class="p-5 md:p-10 min-h-screen">
 	<div class="flex flex-col md:flex-row justify-between gap-8">
 		<Search />
 		<Region />
