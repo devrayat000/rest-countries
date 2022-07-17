@@ -1,6 +1,10 @@
 import { ArrowLeftIcon } from "@heroicons/react/outline";
-import type { LoaderFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import {
+  redirect,
+  type LoaderFunction,
+  type HeadersFunction,
+  type MetaFunction,
+} from "@remix-run/node";
 import { Link, useLoaderData, useNavigate } from "@remix-run/react";
 
 import Info from "~/lib/components/info";
@@ -15,6 +19,31 @@ import {
   extractLanguages,
   extractNativeName,
 } from "~/lib/utils/functions";
+
+export const meta: MetaFunction = ({ data: { country }, location }) => {
+  return {
+    title: country.name.official,
+    description: "Get infromation about any country in the world.",
+    keywords: ["country", "rest", "travel", "info", "informative"].join(","),
+    robots: ["index", "nofollow"].join(","),
+    "og:title": country.name.official,
+    "og:description": "Get infromation about any country in the world.",
+    "og:url": "https://every-country.netlify.app" + location.pathname,
+    "og:type": "website",
+    "og:image": country.flags.png,
+    "og:image:alt": `Flag - ${country.name.official}`,
+    "twitter:title": country.name.official,
+    "twitter:description": "Get infromation about any country in the world.",
+    "twitter:image": country.flags.png,
+    "twitter:image:alt": `Flag - ${country.name.official}`,
+  };
+};
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "public, max-age=0, s-maxage=86400",
+  };
+};
 
 export const loader: LoaderFunction = async ({ params }) => {
   const code = params.code;

@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SearchIcon } from "@heroicons/react/solid";
 import { Menu, Transition } from "@headlessui/react";
-import { Link, useFetcher, useSearchParams } from "@remix-run/react";
+import { Form, Link, useFetcher, useSearchParams } from "@remix-run/react";
 import debounce from "lodash.debounce";
 
 import type { FilteredCountry } from "../services/country-list";
@@ -18,34 +18,34 @@ const Search = () => {
     }
   }, [params, inputRef]);
 
-  const handleSearchAutocomplete = useCallback(
-    debounce(
-      async (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const input = e.target.value;
+  const handleSearchAutocomplete = debounce(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      const input = e.target.value;
 
-        if (!input) {
-          return;
-        }
-        fetcher.load(`/api/autocomplete?query=${input}`);
-
-        // console.log(countries);
-        // open = true;
-        setOpen(true);
-      },
-      1500,
-      {
-        leading: false,
-        trailing: true,
+      if (!input) {
+        return;
       }
-    ),
-    []
+      fetcher.load(`/api/autocomplete?query=${input}`);
+
+      // console.log(countries);
+      // open = true;
+      setOpen(true);
+    },
+    1500,
+    {
+      leading: false,
+      trailing: true,
+    }
   );
 
   return (
     <section className="text-justify">
-      <Menu as="div" className="relative inline-block text-left w-full md:w-96">
-        <fetcher.Form
+      <Menu
+        as="div"
+        className="relative inline-block text-left w-full md:w-96 z-50"
+      >
+        <Form
           method="get"
           action="/"
           className="rounded-md shadow-md py-2 px-7 bg-light-card dark:bg-dark-card flex items-center w-full md:w-96"
@@ -60,7 +60,7 @@ const Search = () => {
             placeholder="Search for a country..."
             className="flex-1 ml-3 bg-inherit text-inherit placeholder:text-gray-300 text-sm border-none focus:border-none focus:outline-none focus:ring-0 focus-visible:outline-none"
           />
-        </fetcher.Form>
+        </Form>
         <Transition
           show={open}
           as="div"

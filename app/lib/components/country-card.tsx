@@ -11,6 +11,7 @@ const CountryCard: React.FC<Props> = ({ country }) => {
   return (
     <Link
       to={`/c/${country.ccn3}`}
+      prefetch="intent"
       title={country.name.official}
       className="shadow-md rounded-md text-inherit bg-light-card dark:bg-dark-card overflow-hidden no-underline"
     >

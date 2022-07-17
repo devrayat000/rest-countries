@@ -1,4 +1,4 @@
-import { Form, useSearchParams } from "@remix-run/react";
+import { Link, useSearchParams } from "@remix-run/react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import clsx from "clsx";
@@ -10,7 +10,7 @@ const Region = () => {
 
   return (
     <section className="text-left">
-      <Menu as="div" className="relative inline-block text-left">
+      <Menu as="div" className="relative inline-block text-left z-40">
         <div>
           <Menu.Button className="inline-flex items-center gap-4 w-full justify-center shadow-md rounded-md bg-light-card dark:bg-dark-card px-6 py-4 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             {/* @ts-ignore */}
@@ -41,15 +41,17 @@ const Region = () => {
             as="section"
             className="absolute left-0 md:right-0 md:left-auto mt-2 w-56 origin-top-left rounded-md bg-light-card dark:bg-dark-card shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
-            <Form method="get" action="/" className="p-1">
+            <div className="p-1">
               {regions.map((region) => (
                 <Menu.Item
                   key={region}
+                  as={Link}
+                  to={{
+                    pathname: "/",
+                    search: "?r=" + region.toLowerCase(),
+                  }}
+                  prefetch="intent"
                   aria-selected={params.get("r") === region.toLowerCase()}
-                  as="button"
-                  name="r"
-                  value={region.toLowerCase()}
-                  type="submit"
                   className={({ active }) =>
                     clsx(
                       active && "bg-light-bg dark:bg-dark-bg",
@@ -60,7 +62,7 @@ const Region = () => {
                   {region}
                 </Menu.Item>
               ))}
-            </Form>
+            </div>
           </Menu.Items>
         </Transition>
       </Menu>

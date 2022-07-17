@@ -15,7 +15,8 @@ export function getAllCountries(): Promise<FilteredCountry[]> {
   return fetch(getAllCountriesUrl().toString()).then((r) => r.json());
 }
 
-export function getAllCountryCodes(): Promise<Pick<Country, "ccn3">[]> {
+export type CountryID = Pick<Country, "ccn3">;
+export function getAllCountryCodes(): Promise<CountryID[]> {
   return fetch(getCountryCodes().toString()).then((r) => r.json());
 }
 
