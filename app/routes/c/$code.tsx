@@ -13,7 +13,7 @@ import {
   getCountryByCode,
   type BorderCountry,
   type SingleCountry,
-} from "~/lib/services/country-list";
+} from "~/lib/services/country-list.server";
 import {
   extractCurrencies,
   extractLanguages,

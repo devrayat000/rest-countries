@@ -12,7 +12,7 @@ import {
   getAllCountries,
   getCountriesByRegion,
   getCountriesByName,
-} from "~/lib/services/country-list";
+} from "~/lib/services/country-list.server";
 
 export const meta: MetaFunction = ({ location }) => {
   return {

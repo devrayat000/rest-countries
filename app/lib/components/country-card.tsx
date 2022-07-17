@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 
 import Info from "./info";
-import type { FilteredCountry } from "../services/country-list";
+import type { FilteredCountry } from "../services/country-list.server";
 
 type Props = {
   country: FilteredCountry;

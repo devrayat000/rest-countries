@@ -1,5 +1,5 @@
 import { json, type LoaderFunction } from "@remix-run/node";
-import type { FilteredCountry } from "~/lib/services/country-list";
+import type { FilteredCountry } from "~/lib/services/country-list.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);

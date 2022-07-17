@@ -4,7 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Form, Link, useFetcher, useSearchParams } from "@remix-run/react";
 import debounce from "lodash.debounce";
 
-import type { FilteredCountry } from "../services/country-list";
+import type { FilteredCountry } from "../services/country-list.server";
 
 const Search = () => {
   const [open, setOpen] = useState(false);
