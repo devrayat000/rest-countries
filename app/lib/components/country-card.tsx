@@ -13,7 +13,7 @@ const CountryCard: React.FC<Props> = ({ country }) => {
       to={`/c/${country.ccn3}`}
       prefetch="intent"
       title={country.name.official}
-      className="shadow-md rounded-md text-inherit bg-light-card dark:bg-dark-card overflow-hidden no-underline"
+      className="shadow-md hover:shadow-lg transition-shadow rounded-md text-inherit bg-light-card dark:bg-dark-card overflow-hidden no-underline"
     >
       <img
         className="my-0 h-52 w-full"
