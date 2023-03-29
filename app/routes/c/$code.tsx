@@ -1,18 +1,19 @@
-import { ArrowLeftIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import {
   redirect,
-  type LoaderFunction,
   type HeadersFunction,
+  defer,
+  type LoaderArgs,
   type MetaFunction,
 } from "@remix-run/node";
-import { Link, useLoaderData, useNavigate } from "@remix-run/react";
+import { Await, Link, useLoaderData, useNavigate } from "@remix-run/react";
+import { Suspense } from "react";
 
 import Info from "~/lib/components/info";
+import Spinner from "~/lib/components/spinner";
 import {
   getBorderCountries,
   getCountryByCode,
-  type BorderCountry,
-  type SingleCountry,
 } from "~/lib/services/country-list.server";
 import {
   extractCurrencies,
@@ -20,22 +21,22 @@ import {
   extractNativeName,
 } from "~/lib/utils/functions";
 
-export const meta: MetaFunction = ({ data: { country }, location }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
   return {
-    title: country.name.official,
+    // title: country.name.official,
     description: "Get infromation about any country in the world.",
     keywords: ["country", "rest", "travel", "info", "informative"].join(","),
     robots: ["index", "nofollow"].join(","),
-    "og:title": country.name.official,
+    // "og:title": country.name.official,
     "og:description": "Get infromation about any country in the world.",
     "og:url": "https://every-country.netlify.app" + location.pathname,
     "og:type": "website",
-    "og:image": country.flags.png,
-    "og:image:alt": `Flag - ${country.name.official}`,
-    "twitter:title": country.name.official,
+    // "og:image": country.flags.png,
+    // "og:image:alt": `Flag - ${country.name.official}`,
+    // "twitter:title": country.name.official,
     "twitter:description": "Get infromation about any country in the world.",
-    "twitter:image": country.flags.png,
-    "twitter:image:alt": `Flag - ${country.name.official}`,
+    // "twitter:image": country.flags.png,
+    // "twitter:image:alt": `Flag - ${country.name.official}`,
   };
 };
 
@@ -45,28 +46,23 @@ export const headers: HeadersFunction = () => {
   };
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: LoaderArgs) => {
   const code = params.code;
 
   if (!code) {
-    return redirect("/");
+    throw redirect("/", { status: 404 });
   }
 
-  const country = await getCountryByCode(code);
-  const borderCountries = !country.borders
-    ? null
-    : await getBorderCountries(country.borders);
+  const country = getCountryByCode(code);
+  const borderCountries = country.then((country) =>
+    !country.borders ? null : getBorderCountries(country.borders)
+  );
 
-  return { country, borderCountries };
-};
-
-type Data = {
-  country: SingleCountry;
-  borderCountries: BorderCountry[] | null;
+  return defer({ country, borderCountries });
 };
 
 export default function CountryDetailsPage() {
-  const { country, borderCountries } = useLoaderData<Data>();
+  const data = useLoaderData<typeof loader>();
   const navigate = useNavigate();
 
   return (
@@ -82,71 +78,91 @@ export default function CountryDetailsPage() {
         </button>
       </div>
       <br className="h-14" />
-      <div className="flex flex-col md:flex-row justify-between md:gap-12">
-        <section className="md:flex-1">
-          <img
-            className="m-0 w-full h-full"
-            src={country.flags.png}
-            alt={country.name.official}
-          />
-        </section>
-        <article className="md:flex-1 my-6">
-          <h2 className="text-inherit font-extrabold my-0">
-            {country.name.official}
-          </h2>
-          <br className="h-5" />
-          <div className="flex flex-col md:flex-row gap-7">
-            <section>
-              <Info
-                label="Native Name"
-                value={
-                  country.name.nativeName &&
-                  extractNativeName(country.name.nativeName)[0]
-                }
-              />
-              <Info
-                label="Population"
-                value={country.population.toLocaleString()}
-              />
-              <Info label="Region" value={country.region} />
-              <Info label="Sub Region" value={country.subregion} />
-              <Info label="Capital" value={country.capital[0]} />
-            </section>
-            <section>
-              <Info label="Top Level Domain" value={country.tld[0]} />
-              <Info
-                label="Currencies"
-                value={
-                  country.currencies &&
-                  extractCurrencies(country.currencies).join(", ")
-                }
-              />
-              <Info
-                label="Languages"
-                value={
-                  country.languages &&
-                  extractLanguages(country.languages).join(", ")
-                }
-              />
-            </section>
-          </div>
-          <br className="h-7" />
-          <h4 className="text-inherit font-extrabold mt-0">
-            Border Countries:
-          </h4>
-          <section className="flex gap-3 flex-wrap">
-            {borderCountries?.map((border) => (
-              <Link
-                key={border.ccn3}
-                to={`/c/${border.ccn3}`}
-                className="text-center text-inherit no-underline bg-light-card dark:bg-dark-card text-xs px-6 py-1 shadow-md"
-              >
-                {border.name.common}
-              </Link>
-            ))}
-          </section>
-        </article>
-      </div>
+      <Suspense
+        fallback={
+          <Spinner className="text-rose-700 dark:text-rose-400 h-20 w-20" />
+        }
+      >
+        <Await resolve={data.country}>
+          {(country) => (
+            <div className="flex flex-col md:flex-row justify-between md:gap-12">
+              <section className="md:flex-1">
+                <img
+                  className="m-0 w-full h-full"
+                  src={country.flags.png}
+                  alt={country.name.official}
+                />
+              </section>
+              <article className="md:flex-1 my-6">
+                <h2 className="text-inherit font-extrabold my-0">
+                  {country.name.official}
+                </h2>
+                <br className="h-5" />
+                <div className="flex flex-col md:flex-row gap-7">
+                  <section>
+                    <Info
+                      label="Native Name"
+                      value={
+                        country.name.nativeName &&
+                        extractNativeName(country.name.nativeName)[0]
+                      }
+                    />
+                    <Info
+                      label="Population"
+                      value={country.population.toLocaleString()}
+                    />
+                    <Info label="Region" value={country.region} />
+                    <Info label="Sub Region" value={country.subregion} />
+                    <Info label="Capital" value={country.capital[0]} />
+                  </section>
+                  <section>
+                    <Info label="Top Level Domain" value={country.tld[0]} />
+                    <Info
+                      label="Currencies"
+                      value={
+                        country.currencies &&
+                        extractCurrencies(country.currencies).join(", ")
+                      }
+                    />
+                    <Info
+                      label="Languages"
+                      value={
+                        country.languages &&
+                        extractLanguages(country.languages).join(", ")
+                      }
+                    />
+                  </section>
+                </div>
+                <br className="h-7" />
+                <h4 className="text-inherit font-extrabold mt-0">
+                  Border Countries:
+                </h4>
+                <section className="flex gap-3 flex-wrap">
+                  <Suspense
+                    fallback={
+                      <Spinner className="text-rose-700 dark:text-rose-400" />
+                    }
+                  >
+                    <Await resolve={data.borderCountries}>
+                      {(borderCountries) =>
+                        borderCountries?.map((border) => (
+                          <Link
+                            key={border.ccn3}
+                            to={`/c/${border.ccn3}`}
+                            className="text-center text-inherit no-underline bg-light-card dark:bg-dark-card text-xs px-6 py-1 shadow-md"
+                          >
+                            {border.name.common}
+                          </Link>
+                        ))
+                      }
+                    </Await>
+                  </Suspense>
+                </section>
+              </article>
+            </div>
+          )}
+        </Await>
+      </Suspense>
     </main>
   );
 }

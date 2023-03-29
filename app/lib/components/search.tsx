@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { SearchIcon } from "@heroicons/react/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Menu, Transition } from "@headlessui/react";
 import { Form, Link, useFetcher, useSearchParams } from "@remix-run/react";
 import debounce from "lodash.debounce";
@@ -50,7 +50,7 @@ const Search = () => {
           action="/"
           className="rounded-md shadow-md py-2 px-7 bg-light-card dark:bg-dark-card flex items-center w-full md:w-96"
         >
-          <SearchIcon className="h-6 w-6 text-inherit" />
+          <MagnifyingGlassIcon className="h-6 w-6 text-inherit" />
           <input
             type="search"
             name="s"

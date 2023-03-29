@@ -1,12 +1,15 @@
-import type {
-  HeadersFunction,
-  LoaderFunction,
-  MetaFunction,
+import {
+  defer,
+  type HeadersFunction,
+  type LoaderArgs,
+  type MetaFunction,
 } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Await, useLoaderData } from "@remix-run/react";
+import { Suspense } from "react";
 
 import BaseLayout from "~/lib/components/base-layout";
 import CountryCard from "~/lib/components/country-card";
+import { SkeletonLoader } from "~/lib/components/shimmer";
 import {
   type FilteredCountry,
   getAllCountries,
@@ -39,32 +42,38 @@ export const headers: HeadersFunction = () => {
   };
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   const url = new URL(request.url);
   const region = url.searchParams.get("r");
   const search = url.searchParams.get("s");
 
-  let countries: FilteredCountry[];
+  let countries: Promise<FilteredCountry[]>;
 
   if (region) {
-    countries = await getCountriesByRegion(region);
+    countries = getCountriesByRegion(region);
   } else if (search) {
-    countries = await getCountriesByName(search);
+    countries = getCountriesByName(search);
   } else {
-    countries = await getAllCountries();
+    countries = getAllCountries();
   }
 
-  return countries;
+  return defer({ countries });
 };
 
 export default function HomePage() {
-  const countries = useLoaderData<FilteredCountry[]>();
+  const data = useLoaderData<typeof loader>();
 
   return (
     <BaseLayout>
-      {countries?.map((country) => (
-        <CountryCard key={country.ccn3} country={country} />
-      ))}
+      <Suspense fallback={<SkeletonLoader />}>
+        <Await resolve={data.countries}>
+          {(countries) =>
+            countries?.map((country) => (
+              <CountryCard key={country.ccn3} country={country} />
+            ))
+          }
+        </Await>
+      </Suspense>
     </BaseLayout>
   );
 }

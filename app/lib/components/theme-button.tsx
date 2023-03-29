@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { MoonIcon as MoonOutlineIcon } from "@heroicons/react/outline";
-import { MoonIcon as MoonSolidIcon } from "@heroicons/react/solid";
+import { MoonIcon as MoonOutlineIcon } from "@heroicons/react/24/outline";
+import { MoonIcon as MoonSolidIcon } from "@heroicons/react/24/solid";
 
 type ThemeMode = "light" | "dark";
 
