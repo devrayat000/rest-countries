@@ -7,7 +7,8 @@
     "dev": "concurrently \"npm run dev:css\" \"remix dev\"",
     "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
     "start": "remix-serve build",
-    "start:netlify": "cross-env NODE_ENV=production netlify dev"
+    "start:netlify": "cross-env NODE_ENV=production netlify dev",
+    "postinstall": "pnpm patch"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.13",
@@ -18,6 +19,7 @@
     "@remix-run/react": "^1.14.3",
     "clsx": "^1.2.1",
     "cross-env": "^7.0.3",
+    "idb": "^7.1.1",
     "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

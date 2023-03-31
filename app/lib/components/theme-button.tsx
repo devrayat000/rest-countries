@@ -1,6 +1,18 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  useLayoutEffect as useReactLayoutEffect,
+} from "react";
 import { MoonIcon as MoonOutlineIcon } from "@heroicons/react/24/outline";
 import { MoonIcon as MoonSolidIcon } from "@heroicons/react/24/solid";
+
+const canUseDOM = !!(
+  typeof window !== "undefined" &&
+  window.document &&
+  window.document.createElement
+);
+
+const useLayoutEffect = canUseDOM ? useReactLayoutEffect : () => {};
 
 type ThemeMode = "light" | "dark";
 
@@ -26,11 +38,14 @@ const ThemeButton = () => {
     if (themeMode == "dark") {
       document.body.classList.add(themeMode);
     } else {
-      document.body.removeAttribute("class");
+      document.body.classList.remove(themeMode);
+      if (!document.body.classList.length) {
+        document.body.removeAttribute("class");
+      }
     }
   }, [themeMode]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const storedMode = localStorage.getItem(THEME_KEY);
     if (storedMode) setThemeMode(storedMode as ThemeMode);
   }, []);
