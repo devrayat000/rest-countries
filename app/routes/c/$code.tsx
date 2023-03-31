@@ -140,7 +140,7 @@ export default function CountryDetailsPage() {
                 <section className="flex gap-3 flex-wrap">
                   <Suspense
                     fallback={
-                      <Spinner className="text-rose-700 dark:text-rose-400" />
+                      <Spinner className="text-rose-700 dark:text-rose-400 w-6 h-6" />
                     }
                   >
                     <Await resolve={data.borderCountries}>
