@@ -14,6 +14,7 @@ import Spinner from "~/lib/components/spinner";
 import {
   getBorderCountries,
   getCountryByCode,
+  getCountryMeta,
 } from "~/lib/services/country-list.server";
 import {
   extractCurrencies,
@@ -21,22 +22,25 @@ import {
   extractNativeName,
 } from "~/lib/utils/functions";
 
-export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
+export const meta: MetaFunction<typeof loader> = ({
+  data: { meta },
+  location,
+}) => {
   return {
-    // title: country.name.official,
+    title: meta.name.official,
     description: "Get infromation about any country in the world.",
     keywords: ["country", "rest", "travel", "info", "informative"].join(","),
     robots: ["index", "nofollow"].join(","),
-    // "og:title": country.name.official,
+    "og:title": meta.name.official,
     "og:description": "Get infromation about any country in the world.",
     "og:url": "https://every-country.netlify.app" + location.pathname,
     "og:type": "website",
-    // "og:image": country.flags.png,
-    // "og:image:alt": `Flag - ${country.name.official}`,
-    // "twitter:title": country.name.official,
+    "og:image": meta.flags.png,
+    "og:image:alt": `Flag - ${meta.name.official}`,
+    "twitter:title": meta.name.official,
     "twitter:description": "Get infromation about any country in the world.",
-    // "twitter:image": country.flags.png,
-    // "twitter:image:alt": `Flag - ${country.name.official}`,
+    "twitter:image": meta.flags.png,
+    "twitter:image:alt": `Flag - ${meta.name.official}`,
   };
 };
 
@@ -58,7 +62,11 @@ export const loader = async ({ params }: LoaderArgs) => {
     !country.borders ? null : getBorderCountries(country.borders)
   );
 
-  return defer({ country, borderCountries });
+  return defer({
+    country,
+    borderCountries,
+    meta: await getCountryMeta(code),
+  });
 };
 
 export default function CountryDetailsPage() {

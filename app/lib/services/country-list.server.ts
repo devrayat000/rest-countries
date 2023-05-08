@@ -46,12 +46,24 @@ export type SingleCountry = Pick<
   | "borders"
 >;
 
+export type CountryMeta = Pick<Country, "name" | "flags">;
+
 export async function getCountryByCode(code: string) {
   const res = await fetch(
     `https://restcountries.com/v3.1/alpha/?codes=${code}&fields=name,flags,population,region,subregion,capital,tld,currencies,languages,borders`
   );
 
   const country = (await res.json())[0] as SingleCountry;
+
+  return country;
+}
+
+export async function getCountryMeta(code: string) {
+  const res = await fetch(
+    `https://restcountries.com/v3.1/alpha/?codes=${code}&fields=name,flags`
+  );
+
+  const country = (await res.json())[0] as CountryMeta;
 
   return country;
 }
